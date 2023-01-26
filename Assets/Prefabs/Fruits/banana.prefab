@@ -103,6 +103,7 @@ MonoBehaviour:
   linkToFruit: {fileID: 0}
   basket: {fileID: 0}
   speed: 5
+  rb: {fileID: 0}
   selectedFruit: {fileID: 0}
   selectedFruit2: 0
   mainCamera: {fileID: 0}

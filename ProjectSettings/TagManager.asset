@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fruit
   - Basket
+  - TargetFruit
   layers:
   - Default
   - TransparentFX

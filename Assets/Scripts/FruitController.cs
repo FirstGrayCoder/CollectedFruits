@@ -27,6 +27,7 @@ public class FruitController : MonoBehaviour //IPointerClickHandler
     [SerializeField] Fruits selectedFruit2;
     [SerializeField] Camera mainCamera;
     [SerializeField] LayerMask maskFruit;
+    [SerializeField] public static bool isTargetFruit =  false;
 
     public void Awake()
     {
@@ -36,24 +37,35 @@ public class FruitController : MonoBehaviour //IPointerClickHandler
     }
     void Start()
     {
+        //rb.isKinematic = true;
         targetFruit = (Fruits)gameManager.GetComponent<GameManager>().fruit;
     }
 
-    void FixedUpdate()
+    private void LateUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, 500f, maskFruit))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 50f, maskFruit))
             {
-                selectedFruit = hitInfo.collider.gameObject;
-                selectedFruit2 = selectedFruit.GetComponent<FruitController>().fruit;
-                if (targetFruit == selectedFruit2)
+                if(hitInfo.collider.CompareTag("Fruit"))
                 {
-                    selectedFruit.transform.position = Vector3.Lerp(selectedFruit.transform.position, basket.transform.position, Time.deltaTime * speed);
-                    selectedFruit.transform.SetParent(basket.transform, false);
-                    GameManager.instance.SetFruitToBasket(selectedFruit); //Add fruit to List in Basket
-                } 
+                    selectedFruit = hitInfo.collider.gameObject;
+                    selectedFruit2 = selectedFruit.GetComponent<FruitController>().fruit;
+                    if (targetFruit == selectedFruit2)
+                    {
+                        selectedFruit.tag = "TargetFruit";
+                        isTargetFruit = true;
+                    }
+                    else 
+                    {
+                        Handheld.Vibrate();
+                        GameManager.instance.PlayWrongFruit();
+                        GameManager.instance.LifeDecrease();
+                        //Debug.Log("UPS");
+                    }
+                }
+                
             }
         }
     }

@@ -12,7 +12,7 @@ public class ConveyorPartMoving : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         int speed = GameManager.instance.SetSpeedForConveyor();
         rb.AddForce(speed * Time.fixedDeltaTime * -transform.forward);

@@ -39,20 +39,23 @@ public class GameManager : MonoBehaviour
 
     [Header ("UI")]
     [SerializeField] GameObject playButton;
-    [SerializeField] TMP_Text text;
+    [SerializeField] TMP_Text taskText;
+    [SerializeField] TMP_Text lifeCount;
     [SerializeField] GameObject textTask;
     [SerializeField] GameObject pointText;
+    [SerializeField] GameObject lifeText;
+    [SerializeField] int lifes = 4;
+    [SerializeField] GameObject losePanel;
 
     [Header ("List of Fruits ")]
     [SerializeField] List<GameObject> fruitsObjects = new List<GameObject>();
     [SerializeField] GameObject convPartParent;
     [SerializeField] List<GameObject> fruitsInBusket = new List<GameObject>();
-
-    // Start is called before the first frame update
+    [SerializeField] AudioController audioController;
 
     public void Awake()
     {
-        //pointText.SetActive(false);
+
         playButton.SetActive(true);
         Time.timeScale = 0;
         isStopGame = false;
@@ -67,18 +70,40 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        //animController = GetComponent<AnimatorController>();
+        lifeText.SetActive(false);
+        losePanel.SetActive(false);
         textTask.SetActive(true);
         winPanel.SetActive(false);
         conveyorSwitchOff.SetActive(true);
-        text.text = $"Collect {taskFruits} {fruit}";
+        
+        
     }
-
-    // Update is called once per frame
     public void PlayGame()
     {
         Time.timeScale = 1;
+        lifeText.SetActive(true);
+        lifeCount.text = lifes.ToString();
         playButton.SetActive(false);
+        taskText.text = $"Collect {taskFruits} {fruit}";
+    }
+
+    public void LifeDecrease()
+    {
+        animPoint.Play("WrongFruit");
+        if (lifes > 0) lifes--;
+        lifeCount.text = lifes.ToString();
+        if (lifes == 0)
+        {
+            losePanel.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
+
+    public void FruitInDaskDecrease()
+    {
+        taskFruits--;
+        taskText.text = $"Collect {taskFruits} {fruit}";
+
     }
 
     public GameObject SpownFruits()
@@ -99,7 +124,6 @@ public class GameManager : MonoBehaviour
         
         fruitsInBusket.Add(fruit);
         animPoint.Play("PointAnim");
-        Debug.Log("PORA ");
         if (fruitsInBusket.Count == taskFruits)
         {
             isStopGame = true;
@@ -170,5 +194,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(fruitsInBusket[i-1]);
         }
+    }
+
+    public void PlayWrongFruit()
+    {
+        audioController.PlayWrongFruit();
     }
 }
