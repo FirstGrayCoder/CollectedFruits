@@ -15,7 +15,7 @@ public class ConveyorPartMoving : MonoBehaviour
     void Update()
     {
         int speed = GameManager.instance.SetSpeedForConveyor();
-        rb.AddForce(speed * Time.fixedDeltaTime * -transform.forward);
+        rb.AddForce(speed * Time.deltaTime * -transform.forward);
     }
 
 }

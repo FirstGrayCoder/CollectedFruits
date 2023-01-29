@@ -12,16 +12,17 @@ public class CheckBasket : MonoBehaviour
     { 
         startPosConstraint = constraint.transform.position;
     }
-    public void OnTriggerEnter(UnityEngine.Collider other)
+    public void OnTriggerExit(UnityEngine.Collider other)
     {
         if (other.CompareTag("TargetFruit"))
         {
             GameManager.instance.SetFruitToBasket(other.gameObject); //Add fruit to List in Basket
-            GameManager.instance.FruitInDaskDecrease();
+            GameManager.instance.FruitInTaskDecrease();
             other.transform.SetParent(basketObject.transform, true);
-            TakeTargetFruit.isInBasket = false;
+            other.GetComponent<Rigidbody>().isKinematic = false;
+            TakeTargetFruit.isInHand = false;
             
-            other.isTrigger = false;
+            //other.isTrigger = false;
             constraint.transform.position = startPosConstraint;
         }
     }

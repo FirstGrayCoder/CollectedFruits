@@ -6,6 +6,8 @@ public class AudioController : MonoBehaviour
 {
     [Header("WrongFruit")]
     [SerializeField] AudioSource clipWrongFruit;
+    [Header("DanceMusic")]
+    [SerializeField] AudioSource danceMusic;
 
     public void Awake()
     {
@@ -16,5 +18,11 @@ public class AudioController : MonoBehaviour
     {
         clipWrongFruit.Play();
     }
+
+    public void PlayDanceMusic()
+    {
+        danceMusic.Play();
+    }
+
 
 }

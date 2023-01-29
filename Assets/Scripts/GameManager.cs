@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] AnimatorController animController;
     [SerializeField] Animator animPoint;
+    [SerializeField] Animator animWrongFruit;
+    [SerializeField, HideInInspector] int numOfFruits;
 
     
 
@@ -41,11 +43,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject playButton;
     [SerializeField] TMP_Text taskText;
     [SerializeField] TMP_Text lifeCount;
-    [SerializeField] GameObject textTask;
+    [SerializeField] GameObject textTaskObject;
     [SerializeField] GameObject pointText;
     [SerializeField] GameObject lifeText;
     [SerializeField] int lifes = 4;
     [SerializeField] GameObject losePanel;
+    [Range(0, 100)]
+        public int hhh;
 
     [Header ("List of Fruits ")]
     [SerializeField] List<GameObject> fruitsObjects = new List<GameObject>();
@@ -70,9 +74,10 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        numOfFruits = taskFruits;
         lifeText.SetActive(false);
         losePanel.SetActive(false);
-        textTask.SetActive(true);
+        textTaskObject.SetActive(true);
         winPanel.SetActive(false);
         conveyorSwitchOff.SetActive(true);
         
@@ -89,7 +94,7 @@ public class GameManager : MonoBehaviour
 
     public void LifeDecrease()
     {
-        animPoint.Play("WrongFruit");
+        animWrongFruit.Play("WrongFruit");
         if (lifes > 0) lifes--;
         lifeCount.text = lifes.ToString();
         if (lifes == 0)
@@ -99,7 +104,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void FruitInDaskDecrease()
+    public void FruitInTaskDecrease()
     {
         taskFruits--;
         taskText.text = $"Collect {taskFruits} {fruit}";
@@ -124,7 +129,7 @@ public class GameManager : MonoBehaviour
         
         fruitsInBusket.Add(fruit);
         animPoint.Play("PointAnim");
-        if (fruitsInBusket.Count == taskFruits)
+        if (fruitsInBusket.Count == numOfFruits)
         {
             isStopGame = true;
             WinTime();
@@ -144,14 +149,15 @@ public class GameManager : MonoBehaviour
     public void WinTime()
     {
         DeleteFruitsOutBasket();
-        
+        lifeText.SetActive(false);
         animController.DancingOn();
-        textTask.SetActive(false);
+        textTaskObject.SetActive(false);
         conveyorSwitchOff.SetActive(false);
         StartCoroutine(OpenWinPanel());
         StartCoroutine(CameraMove());
         CameraToPlayer();
         DeleteConvPart();
+        PlayDanceMucis();
     }
     
     public void CameraToPlayer() 
@@ -199,5 +205,10 @@ public class GameManager : MonoBehaviour
     public void PlayWrongFruit()
     {
         audioController.PlayWrongFruit();
+    }
+
+    public void PlayDanceMucis()
+    {
+        audioController.PlayDanceMusic();
     }
 }

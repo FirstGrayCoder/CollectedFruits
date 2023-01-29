@@ -28,6 +28,7 @@ public class FruitController : MonoBehaviour //IPointerClickHandler
     [SerializeField] Camera mainCamera;
     [SerializeField] LayerMask maskFruit;
     [SerializeField] public static bool isTargetFruit =  false;
+    [SerializeField] bool _isMouseDown;
 
     public void Awake()
     {
@@ -41,13 +42,22 @@ public class FruitController : MonoBehaviour //IPointerClickHandler
         targetFruit = (Fruits)gameManager.GetComponent<GameManager>().fruit;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        /*if (Input.GetMouseButtonUp(0))
         {
+            _isMouseDown = false;
+            return;
+        }
+        if (_isMouseDown) return;*/
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            //_isMouseDown = true;
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 50f, maskFruit))
             {
+                
                 if(hitInfo.collider.CompareTag("Fruit"))
                 {
                     selectedFruit = hitInfo.collider.gameObject;
@@ -59,16 +69,24 @@ public class FruitController : MonoBehaviour //IPointerClickHandler
                     }
                     else 
                     {
+                        selectedFruit.tag = "Player";
                         Handheld.Vibrate();
                         GameManager.instance.PlayWrongFruit();
                         GameManager.instance.LifeDecrease();
-                        //Debug.Log("UPS");
                     }
                 }
                 
             }
+
         }
     }
 
+    public void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("TargetFruit"))
+        {
+            //collision.gameObject.GetComponent<Rigidbody>().position = Vector3.zero;
+        }
+    }
 
 }

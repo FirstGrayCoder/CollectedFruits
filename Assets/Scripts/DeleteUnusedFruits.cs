@@ -6,9 +6,9 @@ public class DeleteUnusedFruits : MonoBehaviour
 {
     public void OnTriggerEnter(Collider other)
     {
-        if (!other.isTrigger)
+        if (other.isTrigger)
         {
-            Destroy(other.gameObject, .5f);
+            Destroy(other.transform.parent.gameObject, .5f);
         }
         
     }

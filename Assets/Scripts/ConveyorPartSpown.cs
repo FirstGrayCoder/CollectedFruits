@@ -16,7 +16,7 @@ public class ConveyorPartSpown : MonoBehaviour
 
     public IEnumerator SpownConveyorPart()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(.5f);
         GameObject conveyorPart = Instantiate(conveyorPartPrefab, spownPosition.position, Quaternion.identity, conveyorPartParent);
     }
 

@@ -9,10 +9,10 @@ public class TakeTargetFruit : MonoBehaviour
 {
     [SerializeField] GameObject basket;
     [SerializeField] GameObject constraint;
-    [SerializeField] float speed = 2f;
+    [SerializeField] float speed = 200f;
     [SerializeField] Transform constrStartPos;
     [SerializeField] GameObject boneParent;
-    public static bool isInBasket = false;
+    public static bool isInHand = false;
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class TakeTargetFruit : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(isInBasket)
+        if(isInHand)
         {
             constraint.transform.position = Vector3.Lerp(constraint.transform.position, basket.transform.position, Time.deltaTime * speed);
             
@@ -34,7 +34,7 @@ public class TakeTargetFruit : MonoBehaviour
         {
             constraint.transform.position = other.transform.position;
             other.transform.SetParent(constraint.transform, true);
-            isInBasket = true;
+            isInHand = true;
             
         }
     }

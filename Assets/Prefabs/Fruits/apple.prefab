@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 23363714592162624}
   - component: {fileID: -8388476225311191750}
   - component: {fileID: -8353009014141549267}
+  - component: {fileID: -8519049130239373025}
   m_Layer: 4
   m_Name: apple
   m_TagString: Fruit
@@ -103,13 +104,13 @@ MonoBehaviour:
   linkToFruit: {fileID: 0}
   basket: {fileID: 0}
   speed: 5
-  rb: {fileID: 0}
   selectedFruit: {fileID: 0}
   selectedFruit2: 0
   mainCamera: {fileID: 0}
   maskFruit:
     serializedVersion: 2
     m_Bits: 16
+  _isMouseDown: 0
 --- !u!135 &-8353009014141549267
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -121,5 +122,21 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.007872388
-  m_Center: {x: 0.0000000020954758, y: -0.00000000325963, z: 0}
+  m_Radius: 0.0063786656
+  m_Center: {x: 0.0000000023841857, y: -0.000000002980232, z: -0.0014937235}
+--- !u!54 &-8519049130239373025
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829371231341652}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
